@@ -1,0 +1,13 @@
+// $Id$
+// vim:ft=javascript
+
+// If your extension references something external, use ARG_WITH
+// ARG_WITH("soaprotobuf", "for soaprotobuf support", "no");
+
+// Otherwise, use ARG_ENABLE
+// ARG_ENABLE("soaprotobuf", "enable soaprotobuf support", "no");
+
+if (PHP_SOAPROTOBUF != "no") {
+	EXTENSION("soaprotobuf", "soaprotobuf.c");
+}
+
