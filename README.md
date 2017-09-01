@@ -1,81 +1,72 @@
-本质上是业务设计方式的变革
-一切业务模块暴露对外服务接口
-通过服务接口开放模块的数据与功能
-业务模块之间只能通过服务接口耦合
-不限制服务接口使用的技术堆栈
+# mframework
 
-服务的可用性
-服务可以被自动发现
-服务可以组合
-服务粒度的控制
-服务是无状态的
-服务的迁移
-服务的管理
-服务的监控
+它是一款SOA的轻量级分布式服务框架,其核心部分包含
+* **远程通讯**: restful或者其它api一般用来提供对外的服务，对内的服务更适合采用效率更高的TCP套接字协议。
+* **自动发现**: 内部服务，基于注册中心目录服务，使服务消费方能动态的查找服务提供方，使地址透明，使服务提供方负载均衡可以平滑增加或减少机器。
+* **语言依赖**  : 语言依赖不强,多语言,支持包括C,Java,PHP,GO,Nodejs等广泛的多语言环境。
 
-.服务器端在启动后，将自己所能提供的服务以及版本信息保存到znode节点上
-2.一个服务器端对应一个znode节点，节点的内容信息就是其可以提供的服务的列表
-3.确保如果服务器不可用的时候，znode节点也要被删除
-4.确保如果服务器恢复的时候，znode节点也要被恢复
-5.一个服务端只能注册一种服务的一个版本，否则会有冲突
+## DEMO
+目前只做了php(因为作者对php比较熟悉)的 DEMO  
+  provider使用php swoole实现tcp长连接
+  consumer实现了php的protobuf扩展
+* 定义一个远程服务接口
+* provider发布远程服务到注册中心
+* consumer自动发现远程服务并完成服务调用
 
+想要了解更多, 请使用wike(http://a.io).
 
-1.根据服务名找到匹配的连接池，从池中取出一个可用的连接，使用该连接发送请求并接收应答，使用完毕，将连接释放回连接池
-2.如果没有找到匹配的连接池或者连接池没有空闲连接，则报调用错误
-3.连接池负责管理长连接
+## 文档
 
+* [User's Guide](http://a.io)
+* [Developer's Guide](http://a.io)
+* [Admin's Guide](http://a.io)
 
-1. HTTP+JSON或者HTTP+XML一般用来提供对外的服务
-2.对内的服务更适合采用效率更高的TCP套接字协议
+## 快速启动
+#### 下载代码
+下载本地副本代码, 通过这种工作快速入门。下载我们的演示代码[Github repository](https://github.com/songzhian/ddmframework)
 
 
+```sh
+$ cd ~
+$ # Clone the repository to get the source code.
+$ git clone https://github.com/songzhian/ddmframework.git mframework
+$ git checkout master
+$ # or: git checkout -b mframework-x
+```
+#### 编译 & 运行
+1. 编译文件
 
-1.在Hadoop、Dubbo等著名框架中使用，具备良好的开源社区环境
-2.具备不错的性能和可靠性
-3.非常适合保存类似注册的小量信息
-4.类似文件节点的操作方式，方便理解和使用
-5.可以用Ephemeral特性来同步znode节点与真实节点的状态
+```sh
+$ cd ~/mframework
+$ # The demo code for this quickstart all stay in the `dubbo-demo` folder
+$ cd ./soa_agent
+$ make
+$ ls
+```
+2. 运行 consumer-agent. 开启一个代理服务用于发现服务建立连接
+```sh
+$ cd ~/mframework/soa_agent
+$ #  run
+$ agent.sh
+```
 
-1.在Redis、Fluentd等著名框架中使用，具备良好的开源社区环境
-2.不需要像Thrift需要预先根据IDL文件编译出Stub代码，侵入性更小
-3.虽然没有IDL文件约束接口，但这个问题在内部模块间并不突出
-4.具备媲美protobuf的性能
-5.具备丰富的类型，便于表达报文中的各种信息体
-6.支持包括C,Java,PHP等广泛的多语言环境
+3. 运行 demo-provider. Start the consumer and consume service provided by _the provider_ above
 
-
-1.可采用各种语言环境，比如PHP, Java, Python等
-2.采用具备良好网络IO处理特性的框架，比如基于libevent或MINA的框架
-3.具备优秀的性能
-4.具备或者可以方便添加调用分派的机制
-5.开放源代码，具备良好的代码可控性
-
-
-
-1.通过在目标机器上部署Agent程序，可以在Web管理台上管理服务，包括服务程序的部署更新、启动、停止、查看状态
-
-1.统一每个服务程序的输出日志格式，建立一个统一的分布式的日志收集机制，完成负载统计和业务监控
-2.为每一个请求在入口处(调用的起点,比如Web客户端)分配一个唯一序列号，这个序列号要在服务调用层中被传递，需要记录如下信息：时间、请求序列号、服务名、服务版本号、消耗时间、用户帐号、用户名
-3.在Web管理台可以追踪关于一条请求的所有调用环节的时间消耗、处理状态等信息，便于问题的诊断
-
-
-
-1.基于服务日志，建立服务日志搜索引擎(包含多个索引库)，可以基于用户信息进行全文检索，分析用户行为
-2.基于服务日志和业务分析模型，建立业务大数据分析系统，为企业提供经营决策方面的辅助作用
+```sh
+$ # Navigate to the consumer part
+$ cd ~/mframework/demo-demo/
+$ php SoaServer.php
+```
 
 
-
-
-1.首先完成服务框架的基本原型的开发
-2.选择一个后台功能，进行迁移的工作，包括调整、测试、前后串联等内容
-3.1.逐步迁移其他后台功能，切分要考虑功能依赖的问题，要进行低耦合切分
-3.2.开发服务的监控功能，可以从Web上查看服务的状态、负载等信息
-3.3.开发服务的管理功能，可以从Web上启动、停止、部署(可延后)服务
-3.4.开发数据分析功能，可以追踪和预期用户的消费行为
-
+## 参考文献
 
 http://en.wikipedia.org/wiki/Service-oriented_architecture
 http://www.infoq.com/cn/articles/micro-soa-1
 http://www.infoq.com/cn/articles/micro-soa-2
 http://zookeeper.apache.org/
 http://msgpack.org/
+
+
+
+
