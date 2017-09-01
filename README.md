@@ -61,12 +61,8 @@ $ php SoaServer.php
 
 ## 参考文献
 
-http://en.wikipedia.org/wiki/Service-oriented_architecture
-http://www.infoq.com/cn/articles/micro-soa-1
-http://www.infoq.com/cn/articles/micro-soa-2
-http://zookeeper.apache.org/
-http://msgpack.org/
-
-
-
-
+*http://en.wikipedia.org/wiki/Service-oriented_architecture
+*http://www.infoq.com/cn/articles/micro-soa-1
+*http://www.infoq.com/cn/articles/micro-soa-2
+*http://zookeeper.apache.org/
+*http://msgpack.org/
