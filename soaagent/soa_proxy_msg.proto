@@ -1,0 +1,13 @@
+message soa_proxy_request
+{
+	 required  string  group_name      = 1;
+     required  string  service_name    = 2;
+     required  string  service_version = 3; 
+     required  bytes   request         = 4;
+}
+
+message soa_proxy_response
+{
+	 required  int32   status          = 1;
+     required  bytes   response        = 2;
+}
