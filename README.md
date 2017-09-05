@@ -13,13 +13,9 @@
 * provider发布远程服务到注册中心
 * consumer自动发现远程服务并完成服务调用
 
-想要了解更多, 请使用wike(http://a.io).
+想要了解更多, 请使用wike(https://github.com/songzhian/ddmframework/wiki).
 
-## 文档
 
-* [User's Guide](http://a.io)
-* [Developer's Guide](http://a.io)
-* [Admin's Guide](http://a.io)
 
 ## 快速启动
 #### 下载代码
