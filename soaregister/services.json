@@ -1,0 +1,19 @@
+{
+  "host": "127.0.0.1",
+  "port": 9501,
+  "group": "com/dang/wireless",
+  "services": [
+    {
+      "service": "pay",
+      "version": "1.1.0-beta"
+    },
+    {
+      "service": "bug",
+      "version": "2.1.0"
+    },
+    {
+      "service": "walk",
+      "version": "1.0.0"
+    }
+  ]
+}
