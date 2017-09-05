@@ -1,0 +1,12 @@
+{
+  "host": "192.168.88.165",
+  "port": 9502,
+  "group": "com/dang/wireless",
+  "services": [
+    {
+      "service": "user",
+      "version": "1.1.0-beta",
+      "class"  : "Demo" 
+    }
+  ]
+}
